@@ -1,5 +1,6 @@
 from django.db import models
 from django.utils import timezone
+from django.urls import reverse
 
 
 class Flat(models.Model):
@@ -55,3 +56,10 @@ class Flat(models.Model):
 
     def __str__(self):
         return f'{self.town}, {self.address} ({self.price}р.)'
+
+    def get_absolute_url(self):
+        return reverse('flat', kwargs={'flat_id': self.pk} )
+    class Meta:
+        verbose_name = 'Квартиры'
+        verbose_name_plural = 'Квартиры'
+        ordering = ['created_at']
