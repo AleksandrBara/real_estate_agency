@@ -1,6 +1,7 @@
 from django.db import models
 from django.utils import timezone
 from django.urls import reverse
+from django.contrib.auth.models import User
 
 
 class Flat(models.Model):
@@ -63,3 +64,19 @@ class Flat(models.Model):
         verbose_name = 'Квартиры'
         verbose_name_plural = 'Квартиры'
         ordering = ['created_at']
+
+class Complaint(models.Model):
+    author = models.ForeignKey(
+        User,
+        verbose_name='Автор жалобы',
+        on_delete=models.CASCADE
+    )
+    flat = models.ForeignKey(
+        Flat,
+        verbose_name='Квартира с жалобой',
+        on_delete=models.CASCADE
+    )
+    text = models.TextField(verbose_name='Текст жалобы:')
+    class Meta:
+        verbose_name = 'Жалобы'
+        verbose_name_plural = 'Жалобы'
