@@ -106,3 +106,5 @@ class Apparts_owner(models.Model):
         Flat,
         verbose_name='Квартиры в собственности:',
     )
+    def __str__(self):
+        return self.name
