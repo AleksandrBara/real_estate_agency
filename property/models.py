@@ -7,7 +7,6 @@ from phonenumber_field.modelfields import PhoneNumberField
 
 class Flat(models.Model):
     owners = models.ManyToManyField('property.Apparts_owner', verbose_name='Собственники')
-    owners_phonenumber = models.CharField('Номер владельца', max_length=20)
     created_at = models.DateTimeField(
         'Когда создано объявление',
         default=timezone.now,
@@ -61,11 +60,7 @@ class Flat(models.Model):
         verbose_name='Кто лайкнул',
         blank=True
     )
-    owner_pure_phone = PhoneNumberField(
-        blank=True,
-        null=True,
-        default=None
-    )
+
 
     def __str__(self):
         return f'{self.town}, {self.address} ({self.price}р.)'
