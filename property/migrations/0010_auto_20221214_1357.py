@@ -5,7 +5,7 @@ from django.db import migrations
 def Add_apparts_owner_records(apps, schema_editor):
     Flat = apps.get_model('property', 'Flat')
     Apparts_owner = apps.get_model('property', 'Apparts_owner')
-    for flat in Flat.objects.all():
+    for flat in Flat.objects.iterator():
         apparts_owner_records,*_ = Apparts_owner.objects.get_or_create(
             name=flat.owner,
             phone_number=flat.owners_phonenumber,
