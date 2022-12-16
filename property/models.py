@@ -1,7 +1,7 @@
 from django.db import models
 
 from django.utils import timezone
-from django.urls import reverse
+
 from django.contrib.auth.models import User
 
 from phonenumber_field.modelfields import PhoneNumberField
@@ -71,9 +71,6 @@ class Flat(models.Model):
     def __str__(self):
         return f'{self.town}, {self.address} ({self.price}р.)'
 
-    def get_absolute_url(self):
-        return reverse('flat', kwargs={'flat_id': self.pk} )
-
 
 class Complaint(models.Model):
     author = models.ForeignKey(
@@ -93,6 +90,7 @@ class Complaint(models.Model):
     class Meta:
         verbose_name = 'Жалобы'
         verbose_name_plural = 'Жалобы'
+
 
 class Apparts_owner(models.Model):
     name = models.CharField('ФИО владельца', max_length=100)
