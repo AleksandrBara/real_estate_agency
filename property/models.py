@@ -1,7 +1,9 @@
 from django.db import models
+
 from django.utils import timezone
 from django.urls import reverse
 from django.contrib.auth.models import User
+
 from phonenumber_field.modelfields import PhoneNumberField
 
 
@@ -56,34 +58,38 @@ class Flat(models.Model):
         db_index=True)
     liked_by = models.ManyToManyField(
         User,
-        related_name="liked_flat",
+        related_name="liked_flats",
         verbose_name='Кто лайкнул',
         blank=True
     )
 
+    class Meta:
+        verbose_name = 'Квартиры'
+        verbose_name_plural = 'Квартиры'
+        ordering = ['created_at']
 
     def __str__(self):
         return f'{self.town}, {self.address} ({self.price}р.)'
 
     def get_absolute_url(self):
         return reverse('flat', kwargs={'flat_id': self.pk} )
-    class Meta:
-        verbose_name = 'Квартиры'
-        verbose_name_plural = 'Квартиры'
-        ordering = ['created_at']
+
 
 class Complaint(models.Model):
     author = models.ForeignKey(
         User,
         verbose_name='Автор жалобы',
-        on_delete=models.CASCADE
+        on_delete=models.CASCADE,
+        related_name='authors'
     )
     flat = models.ForeignKey(
         Flat,
         verbose_name='Квартира с жалобой',
-        on_delete=models.CASCADE
+        on_delete=models.CASCADE,
+        related_name='flats'
     )
     text = models.TextField(verbose_name='Текст жалобы:')
+
     class Meta:
         verbose_name = 'Жалобы'
         verbose_name_plural = 'Жалобы'
@@ -100,6 +106,10 @@ class Apparts_owner(models.Model):
     flats = models.ManyToManyField(
         Flat,
         verbose_name='Квартиры в собственности:',
+        related_name='flats_owner',
+        blank=True,
+        default=None
     )
+
     def __str__(self):
         return self.name
