@@ -4,7 +4,7 @@ from django.db import migrations
 
 def add_owners_to_flats(apps, schema_editor):
     Flat = apps.get_model('property', 'Flat')
-    Apparts_owner = apps.get_model('property', 'Apparts_owner')
+    Apparts_owner = apps.get_model('property', 'Owner')
     for flat in Flat.objects.iterator():
         flat_owners = Apparts_owner.objects.filter(flats=flat)
         for owner in flat_owners:
