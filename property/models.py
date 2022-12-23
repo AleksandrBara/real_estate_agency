@@ -8,7 +8,7 @@ from phonenumber_field.modelfields import PhoneNumberField
 
 
 class Flat(models.Model):
-    owners = models.ManyToManyField('property.Apparts_owner', verbose_name='Собственники')
+    owners = models.ManyToManyField('property.Owner', verbose_name='Собственники')
     created_at = models.DateTimeField(
         'Когда создано объявление',
         default=timezone.now,
@@ -92,7 +92,7 @@ class Complaint(models.Model):
         verbose_name_plural = 'Жалобы'
 
 
-class Apparts_owner(models.Model):
+class Owner(models.Model):
     name = models.CharField('ФИО владельца', max_length=100)
     phone_number = models.CharField('Номер телефона', max_length=10)
     pure_phone = PhoneNumberField(
