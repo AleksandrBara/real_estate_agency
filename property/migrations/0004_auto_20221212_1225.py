@@ -7,8 +7,11 @@ def define_field_new_building(apps, schema_editor):
     Flat = apps.get_model('property', 'Flat')
     year_marker = 2015
     Flat.objects.filter(
-        construction_year__gt=year_marker
+        construction_year__gte=year_marker
     ).update(new_building=True)
+    Flat.objects.filter(
+        construction_year__lt=year_marker
+    ).update(new_building=False)
 
 
 class Migration(migrations.Migration):
